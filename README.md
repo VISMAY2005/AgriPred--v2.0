@@ -1,62 +1,26 @@
 # V AgriPredict – AI Crop Forecasting & Simulation System
 
-V AgriPredict is a Streamlit-based AI system for crop yield prediction, production estimation, and agricultural simulation.
+V AgriPredict is an AI-based crop prediction and simulation system built using Streamlit. It predicts crop yield and production using FAOSTAT data and a stacked ensemble machine learning model.
 
-It combines FAOSTAT real-world data with a custom-built machine learning engine to simulate farming conditions and recommend optimal crops.
+The system models real agricultural conditions such as temperature, rainfall, irrigation, fertilizer usage, soil quality, and pest pressure. These inputs are transformed into a 22-feature agronomic vector derived from FAO datasets.
+
+A stacked ensemble model is used:
+• XGBoost (400 trees)
+• Random Forest (300 trees)
+• Ridge Regression (meta-learner)
+
+The model is trained on 5000 realistic synthetic scenarios based on FAO distributions. It generates predictions along with confidence scores using model variance.
 
 --------------------------------------------------
 
-## Core Capabilities
+## Features
 
 • Crop yield prediction (t/ha)  
-• Production estimation (million tonnes)  
-• FAO-based simulation engine  
-• Top crop recommendation system  
-• Confidence scoring using model uncertainty  
-• Interactive scenario testing  
-
---------------------------------------------------
-
-## Two System Modes
-
-### 1. FAO Data Mode (Real Data)
-- Uses FAOSTAT API
-- Pulls real agricultural data
-- Suitable for analysis and validation
-
-### 2. Simulation Mode (AI Engine)
-- Uses FAO-derived agronomic models
-- Generates synthetic scenarios
-- Runs custom Random Forest (NumPy-based)
-
---------------------------------------------------
-
-## Key Technical Design
-
-### Feature Engineering
-18-dimensional FAO ecosystem feature vector:
-- temperature stress
-- water stress
-- fertilizer efficiency
-- soil quality
-- irrigation benefit
-- agro suitability score
-- country yield index
-- and more
-
-### Model
-Custom implementation:
-- Decision Tree (from scratch)
-- Random Forest ensemble (50 trees)
-- Prediction intervals using variance
-
-### Training
-- 3500 FAO-based synthetic scenarios
-- Realistic distributions based on:
-  - FAO AQUASTAT
-  - CLIMWAT
-  - GAEZ v4
-  - FAOSTAT
+• Production estimation  
+• FAO-based simulation system  
+• Top crop recommendation (Top 5)  
+• Confidence scoring  
+• Interactive dashboard  
 
 --------------------------------------------------
 
@@ -64,44 +28,34 @@ Custom implementation:
 
 • Python  
 • Streamlit  
-• NumPy  
-• Pandas  
+• NumPy, Pandas  
+• Scikit-learn  
+• XGBoost  
 • Requests  
-
-(No sklearn or external ML libraries used)
 
 --------------------------------------------------
 
 ## Project Structure
 
-
 AgriPredict/
 │
-├── app.py # Main Streamlit app (your current file)
-├── synthetic_version.py # Optional offline version (if you keep it)
+├── app.py
 ├── requirements.txt
 ├── README.md
-
 
 --------------------------------------------------
 
 ## How to Run
 
-### 1. Create virtual environment
-
+1. Create environment:
 python -m venv venv
 venv\Scripts\activate
 
-
-### 2. Install dependencies
-
+2. Install dependencies:
 pip install -r requirements.txt
 
-
-### 3. Run app
-
+3. Run:
 streamlit run app.py
-
 
 --------------------------------------------------
 
@@ -114,20 +68,18 @@ https://www.fao.org/faostat/
 
 ## Notes
 
-• FAO API can be slow due to large dataset  
-• Bulk download is used for efficiency  
-• Simulation works offline if API fails  
-• Model confidence is derived from tree variance  
+• Requires internet for FAO API  
+• Falls back to simulation if API fails  
+• Uses 22 engineered agronomic features  
 
 --------------------------------------------------
 
 ## Output
 
-• Yield prediction (t/ha)  
-• Production estimate (Mt)  
-• Confidence score (%)  
-• Top crop recommendations  
-• Scenario comparison  
+• Yield prediction  
+• Production estimation  
+• Confidence score  
+• Crop recommendations  
 
 --------------------------------------------------
 
